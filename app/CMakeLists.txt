@@ -12,7 +12,7 @@ cmake_minimum_required(VERSION 3.4.1)
 
 # 配置so库信息
 add_library( # Sets the name of the library.
-        # 生成的so库名称，此处生成的so文件名称是libnative-lib.so
+        # 生成的so库名称，此处生成的so文件名称是libhello.so
         hello
 
         # Sets the library as a shared library.
@@ -25,7 +25,7 @@ add_library( # Sets the name of the library.
         # 资源文件，可以多个，
         # 资源路径是相对路径，相对于本CMakeLists.txt所在目录
         # src/main/jni/test.cpp
-        src/main/jni/hello.c)
+        src/main/jni/ccalljava.c)
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
