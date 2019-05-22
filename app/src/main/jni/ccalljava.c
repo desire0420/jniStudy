@@ -27,8 +27,8 @@ Java_com_jni_JNI_callbackmethod(JNIEnv *env, jobject object) {
 
 }
 /**
-	 * 调用java中Int方法
-	 */
+* 调用java中Int方法
+*/
 JNIEXPORT void JNICALL
 Java_com_jni_JNI_callbackIntmethod(JNIEnv *env, jobject object) {
 
@@ -89,6 +89,5 @@ Java_com_jni_JNI_addJia(JNIEnv *env, jobject instance, jint x, jint y) {
     LOGD("RESLUT = %d", x);
     LOGD("RESLUT = %d", y);
     return x + y;
-    // TODO
 
 }
