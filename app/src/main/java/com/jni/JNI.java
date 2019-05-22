@@ -1,6 +1,7 @@
 package com.jni;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -39,6 +40,8 @@ public class JNI {
     public native String stringTest();
 
     public native int addJia(int x ,int y);
+    //使用数组图片处理
+   public native int[] getImgToGray(int[] data, int w, int h);
 
 
     /*------------------------------------------------------------------------------------------------*/
