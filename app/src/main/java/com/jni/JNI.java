@@ -42,8 +42,13 @@ public class JNI {
     public native int addJia(int x ,int y);
     //使用数组图片处理
    public native int[] getImgToGray(int[] data, int w, int h);
-    protected static native void blurBitmap(Bitmap bitmap, int r);
 
+   //模糊
+   protected static native void blurPixels(int[] img, int w, int h, int r);
+
+
+
+    protected static native void blurBitmap(Bitmap bitmap, int r);
 
 
 

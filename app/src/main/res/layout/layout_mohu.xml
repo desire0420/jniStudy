@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <Button
+                android:id="@+id/revert_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="恢复原始图片" />
+
+            <Button
+                android:id="@+id/java_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Java调用API让图片模糊" />
+
+
+            <Button
+                android:id="@+id/jni_c_bitmap"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Java调用C将图片模糊使用Bitmap JNI Native实现" />
+
+
+            <Button
+                android:id="@+id/jni_c_pixels"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Java调用C将图片模糊使用Pixels JNI Native实现" />
+
+            <Button
+                android:id="@+id/java_gary_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Java将图片置灰" />
+
+            <Button
+                android:id="@+id/jni_gary_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Java调用c将图片置灰" />
+
+            <TextView
+                android:id="@+id/time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="耗用时间" />
+
+            <SeekBar
+                android:id="@+id/seekBar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:max="100"
+                android:progress="0" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/love" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

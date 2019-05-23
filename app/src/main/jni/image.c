@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdint.h>
+#include <android/log.h>
+#include "stackblur.c"
+
 
 /**
  * 宏定义在C中可以打印LogCat
@@ -44,11 +47,61 @@ Java_com_jni_JNI_getImgToGray(JNIEnv *env, jobject instance, jintArray data_, ji
     return result;
 }
 
-
-
+/**模糊,使用Pixels JNI Native实现*/
 JNIEXPORT void JNICALL
-Java_com_jni_JNI_blurBitmap(JNIEnv *env, jclass type, jobject bitmap, jint r) {
+Java_com_jni_JNI_blurPixels(JNIEnv *env, jclass obj, jintArray arrIn, jint w, jint h, jint r) {
+    jint *pix;
+    pix = (*env)->GetIntArrayElements(env, arrIn, 0);
+    if (pix == NULL) {
+        LOGD("Input pixels isn't null.");
+        return;
+    }
+    //Start
+    pix = blur_ARGB_8888(pix, w, h, r);
+    //End
+    //int size = w * h;
+    //jintArray result = env->NewIntArray(size);
+    //env->SetIntArrayRegion(result, 0, size, pix);
+    (*env)->ReleaseIntArrayElements(env, arrIn, pix, 0);
+    //return result;
+}
 
-    // TODO
+/**------使用Bitmap JNI Native实现-------*/
+JNIEXPORT void JNICALL
+Java_com_jni_JNI_blurBitmap(JNIEnv *env, jclass obj, jobject bitmapIn, jint r) {
+    AndroidBitmapInfo infoIn;
+    void *pixels;
 
+    // Get image info
+    if (AndroidBitmap_getInfo(env, bitmapIn, &infoIn) != ANDROID_BITMAP_RESULT_SUCCESS) {
+        LOGD("AndroidBitmap_getInfo failed!");
+        return;
+    }
+    // Check image
+    if (infoIn.format != ANDROID_BITMAP_FORMAT_RGBA_8888 &&
+        infoIn.format != ANDROID_BITMAP_FORMAT_RGB_565) {
+        LOGD("Only support ANDROID_BITMAP_FORMAT_RGBA_8888 and ANDROID_BITMAP_FORMAT_RGB_565");
+        return;
+    }
+
+
+    // Lock all images
+    if (AndroidBitmap_lockPixels(env, bitmapIn, &pixels) != ANDROID_BITMAP_RESULT_SUCCESS) {
+        LOGD("AndroidBitmap_lockPixels failed!");
+        return;
+    }
+    // height width
+    int h = infoIn.height;
+    int w = infoIn.width;
+
+    // Start
+    if (infoIn.format == ANDROID_BITMAP_FORMAT_RGBA_8888) {
+        pixels = blur_ARGB_8888((int *) pixels, w, h, r);
+    } else if (infoIn.format == ANDROID_BITMAP_FORMAT_RGB_565) {
+        pixels = blur_RGB_565((short *) pixels, w, h, r);
+    }
+
+    // End
+    // Unlocks everything
+    AndroidBitmap_unlockPixels(env, bitmapIn);
 }

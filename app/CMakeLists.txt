@@ -26,7 +26,8 @@ add_library( # Sets the name of the library.
         # 资源路径是相对路径，相对于本CMakeLists.txt所在目录
         # src/main/jni/test.cpp
         src/main/jni/image.c
-        src/main/jni/ccalljava.c)
+        src/main/jni/ccalljava.c
+        )
 
 # Searches for a specified prebuilt library and stores the path as a
 # variable. Because CMake includes system libraries in the search path by
@@ -53,6 +54,7 @@ target_link_libraries( # Specifies the target library.
 
         # 目标库
         hello
+        -ljnigraphics
 
         # Links the target library to the log library
         # included in the NDK.
