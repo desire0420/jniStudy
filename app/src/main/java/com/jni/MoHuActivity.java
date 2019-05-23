@@ -111,6 +111,8 @@ public class MoHuActivity extends AppCompatActivity implements View.OnClickListe
                 image.setImageBitmap(getJniBitmap());
                 break;
             case R.id.java_gary_btn:
+//                Bitmap mBitmap5 = ((BitmapDrawable) getResources().getDrawable(R.mipmap.love)).getBitmap();
+//                image.setImageBitmap(processBitmap(mBitmap5));
                 image.setImageBitmap(FileUtil.convertGrayImg(this, R.mipmap.love));
                 break;
 
@@ -138,6 +140,18 @@ public class MoHuActivity extends AppCompatActivity implements View.OnClickListe
         //Jni BitMap Blur
         jni.blurBitmap(bitmap, radius);
         return (bitmap);
+    }
+
+    /**
+     * 处理图片，此方法中会调用nativeProcessBitmap
+     *
+     * @param bitmap
+     * @return
+     */
+    private Bitmap processBitmap(Bitmap bitmap) {
+        Bitmap bmp = bitmap.copy(Bitmap.Config.ARGB_8888, true);
+        jni.nativeProcessBitmap(bmp);
+        return bmp;
     }
 
 

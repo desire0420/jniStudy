@@ -72,12 +72,12 @@ Java_com_jni_JNI_blurBitmap(JNIEnv *env, jclass obj, jobject bitmapIn, jint r) {
     AndroidBitmapInfo infoIn;
     void *pixels;
 
-    // Get image info
+    // Get srcimage info
     if (AndroidBitmap_getInfo(env, bitmapIn, &infoIn) != ANDROID_BITMAP_RESULT_SUCCESS) {
         LOGD("AndroidBitmap_getInfo failed!");
         return;
     }
-    // Check image
+    // Check srcimage
     if (infoIn.format != ANDROID_BITMAP_FORMAT_RGBA_8888 &&
         infoIn.format != ANDROID_BITMAP_FORMAT_RGB_565) {
         LOGD("Only support ANDROID_BITMAP_FORMAT_RGBA_8888 and ANDROID_BITMAP_FORMAT_RGB_565");

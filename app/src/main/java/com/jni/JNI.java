@@ -50,7 +50,7 @@ public class JNI {
     //直接在底层处理bitmap对象
     protected static native void blurBitmap(Bitmap bitmap, int r);
 
-
+    public native void nativeProcessBitmap(Bitmap bitmap);
 
     /*------------------------------------------------------------------------------------------------*/
 

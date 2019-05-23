@@ -27,6 +27,8 @@ add_library( # Sets the name of the library.
         # src/main/jni/test.cpp
         src/main/jni/image.c
         src/main/jni/ccalljava.c
+        src/main/jni/garyimage.c
+
         )
 
 # Searches for a specified prebuilt library and stores the path as a
