@@ -77,6 +77,7 @@ Java_com_jni_JNI_callStaticmethod(JNIEnv *env, jobject instance) {
 JNIEXPORT jstring JNICALL
 Java_com_jni_JNI_stringTest(JNIEnv *env, jobject jobject) {
     //将要传递的字符串先转换成jstring类型 ，然后在传递给java方法
+    //把UTF_8 转换成为java的Unicode编码
     int result = (*env)->NewStringUTF(env, "Java調用C成功了拉");
     return result;
 }

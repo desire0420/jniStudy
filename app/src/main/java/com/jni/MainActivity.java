@@ -4,17 +4,23 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.SimpleTarget;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private Button btn, java_test, jni_test;
     private TextView tv;
     private JNI jni;
-    private ImageView image,jni_image;
+    private ImageView java_image, jni_image;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +31,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         java_test = findViewById(R.id.java_test);
         tv = findViewById(R.id.sample_text);
         jni = new JNI(getApplicationContext());
-        image = findViewById(R.id.image);
-        jni_image=findViewById(R.id.jni_image);
+        java_image = findViewById(R.id.image);
+        jni_image = findViewById(R.id.jni_image);
         findViewById(R.id.bt_javaInt).setOnClickListener(this);
         findViewById(R.id.bt_javanull).setOnClickListener(this);
         findViewById(R.id.bt_javaString).setOnClickListener(this);
         findViewById(R.id.bt_static).setOnClickListener(this);
         findViewById(R.id.btn).setOnClickListener(this);
         findViewById(R.id.btn1).setOnClickListener(this);
-        java_test.setOnClickListener(this);
         jni_test.setOnClickListener(this);
+        java_test.setOnClickListener(this);
+        //Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.image)).getBitmap();
+        // java_image.setImageBitmap(FileUtil.blur(bitmap, 30));
+        //设置高斯模糊
 
     }
 
@@ -57,14 +66,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.java_test:
-                long current = System.currentTimeMillis();
-                image.setImageBitmap(FileUtil.convertGrayImg(this, R.mipmap.image));
-                long performance = System.currentTimeMillis() - current;
-                java_test.setText("耗时" + performance);
+                Glide.with(this).load("https://upload-images.jianshu.io/upload_images/944365-cf5c1a9d2dddaaca.png?imageMogr2/auto-orient/strip|imageView2/1/w/300/h/240")
+                        .asBitmap().skipMemoryCache(true)
+                        .diskCacheStrategy(DiskCacheStrategy.ALL).into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        Log.w("TAG", "secd------->" + resource.hashCode());
+                        long current = System.currentTimeMillis();
+                        java_image.setImageBitmap(FileUtil.convertGrayImg(resource));
+                        long performance = System.currentTimeMillis() - current;
+                        java_test.setText("耗时" + performance);
+                    }
+                }); //方法中设置asBitmap可以设置回调类型
+
+
                 break;
             case R.id.jni_test:
                 long jnicurrent = System.currentTimeMillis();
-                image.setImageBitmap(getJniBitmap());
+                jni_image.setImageBitmap(getJniBitmap());
                 long jniperformance = System.currentTimeMillis() - jnicurrent;
                 jni_test.setText("耗时" + jniperformance);
                 break;
