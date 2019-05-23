@@ -38,8 +38,17 @@ Java_com_jni_JNI_getImgToGray(JNIEnv *env, jobject instance, jintArray data_, ji
     int size = w * h;
     jintArray result = (*env)->NewIntArray(env, size);
     (*env)->SetIntArrayRegion(env, result, 0, size, data);
+
     (*env)->ReleaseIntArrayElements(env, data_, data, 0);
 
-
     return result;
+}
+
+
+
+JNIEXPORT void JNICALL
+Java_com_jni_JNI_blurBitmap(JNIEnv *env, jclass type, jobject bitmap, jint r) {
+
+    // TODO
+
 }

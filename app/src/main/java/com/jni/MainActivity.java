@@ -41,9 +41,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         findViewById(R.id.btn1).setOnClickListener(this);
         jni_test.setOnClickListener(this);
         java_test.setOnClickListener(this);
-        //Bitmap bitmap = ((BitmapDrawable) getResources().getDrawable(R.mipmap.image)).getBitmap();
-        // java_image.setImageBitmap(FileUtil.blur(bitmap, 30));
-        //设置高斯模糊
+
 
     }
 
