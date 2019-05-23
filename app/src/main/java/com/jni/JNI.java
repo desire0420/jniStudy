@@ -39,15 +39,15 @@ public class JNI {
     //java调用C中有返回值方法
     public native String stringTest();
 
-    public native int addJia(int x ,int y);
+    public native int addJia(int x, int y);
+
     //使用数组图片处理
-   public native int[] getImgToGray(int[] data, int w, int h);
+    public native int[] getImgToGray(int[] data, int w, int h);
 
-   //模糊
-   protected static native void blurPixels(int[] img, int w, int h, int r);
+    //模糊
+    protected static native void blurPixels(int[] img, int w, int h, int r);
 
-
-
+    //直接在底层处理bitmap对象
     protected static native void blurBitmap(Bitmap bitmap, int r);
 
 
