@@ -2,7 +2,7 @@
 # documentation: https://d.android.com/studio/projects/add-native-code.html
 
 # Sets the minimum version of CMake required to build the native library.
-
+#指定需要CMAKE的最小版本
 cmake_minimum_required(VERSION 3.4.1)
 
 # Creates and names a library, sets it as either STATIC
@@ -10,7 +10,10 @@ cmake_minimum_required(VERSION 3.4.1)
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
 
-# 配置so库信息
+#设置生成的so动态库最后输出的路径,默认的so文件生成路径在module的build/intermediates/cmake/debug/obj目录下
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/jniLibs/${ANDROID_ABI})
+
+# 配置so库信息,若想加载编译生成多个so库文件，可在CMakeLists.txt文件中多添加几个add_library()函数进行设置
 add_library( # Sets the name of the library.
         # 生成的so库名称，此处生成的so文件名称是libhello.so
         hello
