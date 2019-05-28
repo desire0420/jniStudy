@@ -1,4 +1,4 @@
-package com.jni;
+package utils;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;

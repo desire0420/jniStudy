@@ -1,4 +1,4 @@
-package com.jni;
+package utils;
 
 import android.app.Activity;
 import android.content.Context;

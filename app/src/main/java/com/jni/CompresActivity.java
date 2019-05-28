@@ -2,17 +2,16 @@ package com.jni;
 
 import android.Manifest;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
-
 import java.io.File;
+
+import utils.PermissionUtils;
+import utils.getPhotoFromPhotoAlbum;
 
 /**
  * Created by wangwei on 2019/5/28.
@@ -85,14 +84,6 @@ public class CompresActivity extends AppCompatActivity {
                     if (data != null) {
                         String path = getPhotoFromPhotoAlbum.getRealPathFromUri(this, data.getData());
                         File file = new File(path);
-
-                        Bitmap bitmap = ImageUtil.decodeFile(path);
-                        // 调用写好的native方法
-                        // 用Bitmap.compress压缩1/10
-                        ImageUtil.compressBitmap(bitmap, 75,
-                                Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator +
-                                        new File(path).getName()
-                        );
 
 
 
