@@ -1,5 +1,6 @@
 package com.usersoapp;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -12,22 +13,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.jni.JNI;
-import com.t.myapplication.MyJni;
 
 /**
  * Created by wangwei on 2019/5/24.
  */
 
 public class UserSoActivity extends AppCompatActivity {
-    private Button btn;
+    private Button btn, opencvbtn;
     private TextView text;
     private ImageView image;
     JNI jni;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_user);
         btn = findViewById(R.id.btn);
+        opencvbtn = findViewById(R.id.opencvbtn);
         text = findViewById(R.id.text);
         image = findViewById(R.id.image);
         jni = new JNI(getApplicationContext());
@@ -35,24 +37,28 @@ public class UserSoActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                text.setText(MyJni.stringFromJNI());
-                Log.w("TAG", "調用so的結果==" + MyJni.stringFromJNI());
+                text.setText(jni.stringTest());
+                Log.w("TAG", "調用so的結果==" + jni.stringTest());
                 Bitmap mBitmap3 = ((BitmapDrawable) getResources().getDrawable(R.drawable.srcimage)).getBitmap();
                 // Pixels JNI Native
                 Bitmap newBitmap3 = blurNativelyPixels(mBitmap3, 20, false);
                 image.setImageBitmap(newBitmap3);
             }
         });
+
+        opencvbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(UserSoActivity.this, ImageActivity.class));
+            }
+        });
     }
-
-
-
 
 
     /**
      * "使用Pixels JNI Native实现"
      */
-    public  Bitmap blurNativelyPixels(Bitmap original, int radius, boolean canReuseInBitmap) {
+    public Bitmap blurNativelyPixels(Bitmap original, int radius, boolean canReuseInBitmap) {
         if (radius < 1) {
             return null;
         }
@@ -71,6 +77,7 @@ public class UserSoActivity extends AppCompatActivity {
 
         return (bitmap);
     }
+
     public static Bitmap buildBitmap(Bitmap original, boolean canReuseInBitmap) {
         // First we should check the original
         if (original == null)

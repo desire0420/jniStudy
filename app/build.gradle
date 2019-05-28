@@ -39,4 +39,5 @@ dependencies {
     //compile 'net.qiujuer.genius:blur:2.0.0-beta4'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation 'com.zhihu.android:matisse:0.5.2-beta4'
 }

@@ -47,6 +47,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".MoHuActivity"/>
+        <activity android:name=".CompresActivity"/>
     </application>
 
 </manifest>
