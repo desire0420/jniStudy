@@ -1,1 +1,14 @@
+*.iml
+.gradle
+/local.properties
+/.idea
+.DS_Store
 /build
+/captures
+.externalNativeBuild
+/third_libs/build
+LocalMaven
+gradle.properties
+/module_short_video/build
+/module_moments/build
+/tmpmob/ShareSDK/assets/ShareSDK.xml
