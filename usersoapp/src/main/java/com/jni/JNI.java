@@ -18,11 +18,13 @@ public class JNI {
     public JNI(Context context) {
         this.context = context;
     }
-
+/*
+     这里不再加载so  而是使用动态加载
     static {
         System.loadLibrary("hello");
 
     }
+*/
 
 
     //  native申明 暴露给Java层使用，在c里面实现

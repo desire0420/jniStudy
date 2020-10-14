@@ -1,9 +1,9 @@
 package com.usersoapp;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -12,14 +12,17 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.CpuUtil;
+import com.LoadSoHelper;
 import com.jni.JNI;
+import com.threadpool.ThreadPoolProxyFactory;
 
 /**
  * Created by wangwei on 2019/5/24.
  */
 
 public class UserSoActivity extends AppCompatActivity {
-    private Button btn, opencvbtn;
+    private Button btn, load_so;
     private TextView text;
     private ImageView image;
     JNI jni;
@@ -29,15 +32,29 @@ public class UserSoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.layout_user);
         btn = findViewById(R.id.btn);
-        opencvbtn = findViewById(R.id.opencvbtn);
+        load_so = findViewById(R.id.load_so);
         text = findViewById(R.id.text);
         image = findViewById(R.id.image);
         jni = new JNI(getApplicationContext());
+        load_so.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ThreadPoolProxyFactory.getThreadPoolProxy().execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        loadSo();
 
+                    }
+                });
+
+
+            }
+        });
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 text.setText(jni.stringTest());
+                Log.w("TAG", "cpu==" + CpuUtil.getCpuType());
                 Log.w("TAG", "調用so的結果==" + jni.stringTest());
                 Bitmap mBitmap3 = ((BitmapDrawable) getResources().getDrawable(R.drawable.srcimage)).getBitmap();
                 // Pixels JNI Native
@@ -46,12 +63,36 @@ public class UserSoActivity extends AppCompatActivity {
             }
         });
 
-        opencvbtn.setOnClickListener(new View.OnClickListener() {
+
+    }
+
+    private void loadSo() {
+        //so 文件路径
+        String soPath = Environment.getExternalStorageDirectory().toString() + "/wangwei";
+    /*    File file = new File(soPath);
+        if (file.exists()) {
+            File dir = this.getDir("libs", Context.MODE_PRIVATE);
+            String targetDir = dir.getAbsolutePath() + "/libhello.so";
+            Log.w("TAG", "targetDir==" + targetDir);
+            FileUtils.copyFile(file.toString(), targetDir);
+            System.load(targetDir);
+        }*/
+        LoadSoHelper.getInstance(this).copySo(soPath, true, new LoadSoHelper.CopyListener() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(UserSoActivity.this, ImageActivity.class));
+            public void finish() {
+                Log.w("TAG", "copy_finish==");
+
             }
         });
+
+        LoadSoHelper.getInstance(this).loadSo(new LoadSoHelper.LoadListener() {
+            @Override
+            public void finish() {
+                Log.w("TAG", "load-finish==");
+
+            }
+        });
+
     }
 
 
